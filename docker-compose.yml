@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   db-purohueso:
-    image: postgres:10.7-alpine
+    image: postgres:11-alpine
     restart: unless-stopped
     container_name: db-purohueso
     env_file:
