@@ -1,0 +1,25 @@
+version: '3.1'
+services:
+  purohueso:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    restart: unless-stopped
+    command: ./entrypoint.sh
+    image: lvm-purohueso
+    container_name: purohueso
+    env_file:
+     - ./docker.sqlite.env
+    volumes:
+      - .:/app/
+    ports:
+      - "8000:8000"
+    networks:
+      - lvm_apps
+
+networks:
+  lvm_apps:
+    external: true
