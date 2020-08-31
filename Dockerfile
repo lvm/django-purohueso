@@ -1,4 +1,4 @@
-FROM python:3.8-alpine
+FROM python:slim
 LABEL author="mauro@sdf.org"
 
 ARG UID=1000
@@ -12,18 +12,15 @@ WORKDIR $HOME
 
 COPY requirements.txt /app/requirements.txt
 
-RUN apk add --no-cache \
-       --virtual build-deps \
-       musl-dev postgresql-dev \
-       build-base python3-dev zlib-dev git \
-    && apk add --no-cache \
-       postgresql-libs libpq \
-    && pip install -U pip \
-    && pip install -r /app/requirements.txt \
+RUN apt-get update \
+    && apt-get install -qq \
+       libpq-dev gcc zlib1g-dev postgresql-client libpq5 \
+       git-core build-essential python3-dev \
+    && pip3 --no-cache-dir install -U pip \
+    && pip3 install -r /app/requirements.txt \
     && rm -fr /app/.cache \
-    && apk --purge del build-deps \
-    && addgroup -S $USER -g $GID \
-    && adduser -S -G $USER -u $UID -h $HOME $USER
+    && groupadd -g $GID $USER \
+    && useradd -u $UID -g $USER -s /bin/sh $USER
 
 COPY . /app
 
