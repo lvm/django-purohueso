@@ -4,10 +4,10 @@ import os
 
 from celery import Celery
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'purohueso.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', '{{cookiecutter.code_name}}.settings')
 
-app = Celery('purohueso')
-app.config_from_object('purohueso.celeryconf', namespace="CELERY")
+app = Celery('{{cookiecutter.code_name}}')
+app.config_from_object('{{cookiecutter.code_name}}.celeryconf', namespace="CELERY")
 
 # Load task modules from all registered Django app configs.
 app.autodiscover_tasks()

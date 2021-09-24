@@ -1,0 +1,6 @@
+{
+"nice_name": "Puro Hueso",
+"project_slug": "django-{{cookiecutter.nice_name.lower().replace(' ', '_').replace('-', '_')}}",
+"code_name": "{{cookiecutter.nice_name.lower().replace(' ', '_').replace('-', '_')}}",
+"company": "lvm"
+}

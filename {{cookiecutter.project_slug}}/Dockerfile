@@ -6,7 +6,7 @@ ARG GID=1000
 
 ENV PYTHONUNBUFFERED 1
 ENV LANG C.UTF-8
-ENV USER purohueso
+ENV USER {{cookiecutter.code_name}}
 ENV HOME /app
 WORKDIR $HOME
 

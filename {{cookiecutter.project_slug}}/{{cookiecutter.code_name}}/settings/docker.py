@@ -8,8 +8,8 @@ DEBUG = True
 
 ENV_NAME = 'Docker'
 
-MEDIA_ROOT = '/tmp/purohueso-api-media'
-STATIC_ROOT = '/tmp/purohueso-api'
+MEDIA_ROOT = '/tmp/{{cookiecutter.code_name}}-api-media'
+STATIC_ROOT = '/tmp/{{cookiecutter.code_name}}-api'
 
 DATABASES = {
     'default': {

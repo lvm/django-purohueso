@@ -1,0 +1,72 @@
+version: '3.1'
+services:
+  db-{{cookiecutter.code_name}}:
+    image: postgres:11-alpine
+    restart: unless-stopped
+    container_name: db-{{cookiecutter.code_name}}
+    env_file:
+     - ./docker.env
+    ports:
+     - "5432:5432"
+    networks:
+      - {{cookiecutter.company}}_apps
+  redis-{{cookiecutter.code_name}}:
+    image: "redis:5-alpine"
+    restart: unless-stopped
+    container_name: redis-{{cookiecutter.code_name}}
+    volumes:
+      - ./local/redis/:/data/
+    networks:
+      - {{cookiecutter.company}}_apps
+  worker-{{cookiecutter.code_name}}:
+    restart: unless-stopped
+    command: ./entrypoint-celery-worker.sh
+    container_name: worker-{{cookiecutter.code_name}}
+    image: {{cookiecutter.company}}-{{cookiecutter.code_name}}
+    env_file:
+     - ./docker.env
+    links:
+      - redis-{{cookiecutter.code_name}}
+    volumes:
+      - .:/app/
+    networks:
+      - {{cookiecutter.company}}_apps
+  beat-{{cookiecutter.code_name}}:
+    restart: unless-stopped
+    command: ./entrypoint-celery-beat.sh
+    container_name: beat-{{cookiecutter.code_name}}
+    image: {{cookiecutter.company}}-{{cookiecutter.code_name}}
+    env_file:
+     - ./docker.env
+    links:
+      - redis-{{cookiecutter.code_name}}
+    volumes:
+      - .:/app/
+    networks:
+      - {{cookiecutter.company}}_apps
+  {{cookiecutter.code_name}}:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    restart: unless-stopped
+    command: ./entrypoint.sh
+    image: {{cookiecutter.company}}-{{cookiecutter.code_name}}
+    container_name: {{cookiecutter.code_name}}
+    env_file:
+     - ./docker.env
+    links:
+      - db-{{cookiecutter.code_name}}
+      - redis-{{cookiecutter.code_name}}
+    volumes:
+      - .:/app/
+    ports:
+      - "8000:8000"
+    networks:
+      - {{cookiecutter.company}}_apps
+
+networks:
+  {{cookiecutter.company}}_apps:
+    external: true

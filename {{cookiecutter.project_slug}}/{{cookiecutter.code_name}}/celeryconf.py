@@ -12,5 +12,5 @@ result_serializer = 'json'
 accept_content = ['json']
 
 task_routes = {
-    # 'purohueso.apps.app-name.tasks.*': {'queue': 'purohueso'}
+    # '{{cookiecutter.code_name}}.apps.app-name.tasks.*': {'queue': '{{cookiecutter.code_name}}'}
 }

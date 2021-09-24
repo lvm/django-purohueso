@@ -37,7 +37,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'purohueso.urls'
+ROOT_URLCONF = '{{cookiecutter.code_name}}.urls'
 
 TEMPLATES = [
     {
@@ -55,7 +55,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'purohueso.wsgi.application'
+WSGI_APPLICATION = '{{cookiecutter.code_name}}.wsgi.application'
 
 
 # Database
@@ -127,5 +127,5 @@ REST_FRAMEWORK = {
 }
 
 # Applicaton settings
-ENV_NAME = 'ENV_NAME unset'
-ADMIN_TITLE = 'PuroHueso API'
+ENV_NAME = 'Development'
+ADMIN_TITLE = '{{cookiecutter.nice_name}} API'
